@@ -1,0 +1,186 @@
+---
+title: "Week 4 Team Lab Assignment: Visualizing Distributions of Quantitative and Categorical Data"
+author: 
+  - name: "ABDUL HALIM BIN ABDUL RAHIM (2201627)"
+  - name: "MIRZA ANAQI BIN MUHAMMAD HAIZAN (2200981)"
+  - name: "ANG GUO ZHENG FREDERICK (2203322)"
+  - name: "MARK PENG JUNG ZEN (2200849)"
+  - name: "FONG KAH KIAN (2200727)"
+  - name: "AMANDA CHAN HUI EN (2203417)"
+date: "2024-05-31"
+format: html
+---
+
+# 2. Visualizing the Distribution of Quantitative Data: Bill Lengths of Pygoscelis Penguins 
+Pygoscelis penguins, also known as brush-tailed penguins, are a genus found in the Antarctic and subantarctic regions. They are characterized by their black and white plumage and a unique swimming technique called porpoising, where they leap out of the water in a series of rapid jumps to breathe air. This genus includes three species: the Adélie penguin (Pygoscelis adeliae), the gentoo penguin (Pygoscelis papua), and the chinstrap penguin (Pygoscelis antarcticus). Researchers at Palmer Station in Antarctica have collected data on the bill length of these penguins (Gorman, Williams and Fraser, 2014). You will use these data, available from the palmerpenguins package, to explore the differences between the species using various plot types.
+
+# Task 2.1: Remove Missing Values
+Remove penguins with missing bill length measurements to avoid ggplot2 warning messages.
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+
+penguins_clean <- penguins %>% drop_na(bill_length_mm)
+```
+
+# Task 2.2: Scatter Plot of Species versus Bill Length
+Create a scatter plot with custom axis labels, title, and caption.
+
+```{r}
+ggplot(penguins_clean, aes(x = bill_length_mm, y = species)) +
+  geom_point() +
+  labs(
+    title = "Bill Length of Pygoscelis Penguins by Species",
+    x = "Bill Length (mm)",
+    y = "Species",
+    caption = "Source: Gorman et al. (2014)"
+  )
+```
+
+# Task 2.3: Why Should You Jitter the Plot?
+Jittering is suggested due to overlapping points that hinder the unique identification of individuals by bill length and species.
+
+# Task 2.4: Jitter Plot
+Create a jitter plot with reduced opacity and adjusted jittering.
+
+```{r}
+ggplot(penguins_clean, aes(x = bill_length_mm, y = species)) +
+  geom_jitter(alpha = 0.5, width = 0, height = 0.2) +
+  labs(
+    title = "Bill Length of Pygoscelis Penguins by Species",
+    x = "Bill Length (mm)",
+    y = "Species",
+    caption = "Source: Gorman et al. (2014)"
+  )
+```
+
+# Task 2.5: Bee-Swarm Plot
+Use the geom_beeswarm() function to create a bee-swarm plot.
+
+```{r}
+library(ggbeeswarm)
+
+ggplot(penguins_clean, aes(x = bill_length_mm, y = species)) +
+  geom_beeswarm() +
+  labs(
+    title = "Bill Length of Pygoscelis Penguins by Species",
+    x = "Bill Length (mm)",
+    y = "Species",
+    caption = "Source: Gorman et al. (2014)"
+  )
+```
+
+# Task 2.6: Pros and Cons of Bee-Swarm Plots
+Pros: Clear visualization of data density and individual points.
+Cons: Can be less familiar and harder to interpret for some audiences.
+
+# Task 2.7: Violin Plot with Boxes
+Combine a violin plot and a box plot.
+
+```{r}
+ggplot(penguins_clean, aes(x = bill_length_mm, y = species)) +
+  geom_violin() +
+  geom_boxplot(width = 0.2) +
+  labs(
+    title = "Bill Length of Pygoscelis Penguins by Species",
+    x = "Bill Length (mm)",
+    y = "Species",
+    caption = "Source: Gorman et al. (2014)"
+  )
+```
+
+# Task 2.8: Frequency Polygons with Rug Plot
+Display bill-length distribution with frequency polygons and a rug plot.
+
+```{r}
+ggplot(penguins_clean, aes(x = bill_length_mm, color = species)) +
+  geom_freqpoly(binwidth = 1) +
+  geom_rug() +
+  labs(
+    title = "Bill Length Distribution of Pygoscelis Penguins",
+    x = "Bill Length (mm)",
+    y = "Frequency",
+    caption = "Source: Gorman et al. (2014)"
+  )
+```
+
+# Task 2.9: Faceted Frequency Polygons with Rug Plots
+Create faceted plots for each species.
+
+```{r}
+ggplot(penguins_clean, aes(x = bill_length_mm)) +
+  geom_freqpoly(binwidth = 1) +
+  geom_rug() +
+  facet_wrap(~ species) +
+  labs(
+    title = "Bill Length Distribution of Pygoscelis Penguins by Species",
+    x = "Bill Length (mm)",
+    y = "Frequency",
+    caption = "Source: Gorman et al. (2014)"
+  )
+```
+
+# Task 2.10: Pros and Cons of Faceting
+Pros: Allows for easy comparison between groups.
+Cons: Takes up more space and may require careful interpretation.
+
+# Task 2.11: Unmarked Bonus Question: Pairwise T-Test
+Perform a pairwise t-test and interpret the results.
+
+```{r}
+t_test_results <- pairwise.t.test(penguins_clean$bill_length_mm, penguins_clean$species)
+t_test_results$p.value
+```
+
+# 3  Visualizing the Distribution of Categorical Data: Travelers on the Titanic
+The spreadsheet at titanic.csv, available from Prof. Gastner’s website, contains information about the passengers and crew aboard the Titanic during its maiden voyage in 1912, which tragically ended when the ship hit an iceberg and sank. This spreadsheet is based on data available from the Encyclopedia Titanica (Hind, 2023).
+
+# Task 3.1: Bar Chart of Travelers by Class
+Create a bar chart showing the number of travelers by class.
+
+```{r}
+titanic <- read_csv("titanic.csv")
+
+# Create a bar plot for the number of travelers by class
+ggplot(titanic, aes(x = class)) +
+  geom_bar() +
+  labs(
+    title = "Number of Travelers by Class on the Titanic",
+    x = "Class",
+    y = "Number of Travelers",
+    caption = "Source: Encyclopedia Titanica (2023)"
+  )
+```
+
+# Task 3.2: Dodged Bar Chart of Travelers by Class and Survival
+Visualize the survival rate by class using a dodged bar chart.
+
+```{r}
+ggplot(titanic, aes(x = class, fill = survived)) +
+  geom_bar(position = "dodge") +
+  labs(
+    title = "Survival Rate by Class on the Titanic",
+    x = "Class",
+    y = "Number of Travelers",
+    caption = "Source: Encyclopedia Titanica (2023)"
+  )
+```
+
+# Task 3.3: Mosaic Plot
+Create a mosaic plot to display the relationship between class and survival.
+
+```{r}
+library(ggmosaic)
+
+ggplot(data = titanic) +
+  geom_mosaic(aes(weight = 1, x = product(class), fill = survived)) +
+  labs(
+    title = "Class vs. Survival on the Titanic",
+    caption = "Source: Encyclopedia Titanica (2023)"
+  )
+```
+
+# Task 3.4: Pros and Cons of Mosaic Plots
+Pros: Efficiently displays the relationship between two categorical variables.
+Cons: Can be difficult to interpret for large datasets or many categories.
