@@ -138,7 +138,10 @@ Perform a pairwise t-test and interpret the results.
 t_test_results <- pairwise.t.test(penguins_clean$bill_length_mm, penguins_clean$species)
 t_test_results$p.value
 ```
-
+The tables represents the p-values for the pairwise comparisons bewteen the 3 species of penguins. Each cell shows the p-value for the test bewteen species on row the and the species on the column. 
+- Adelie vs Chinstrap: The p-value is extremely low, indicating a statistically siginificant difference in bill lenghts bewteen the 2 species.
+- Adelie vs Gentoo: The p-value is low, indicating a statistically siginificant difference in bill lenghts bewteen the 2 species.
+- Chinstrap vs Gentoo: The p-value is approximately 0.003, which is also below the typical alpha level of 0.05, suggesting significant difference in bill lenghts bewteen the 2 species.
 # 3  Visualizing the Distribution of Categorical Data: Travelers on the Titanic
 The spreadsheet at titanic.csv, available from Prof. Gastner’s website, contains information about the passengers and crew aboard the Titanic during its maiden voyage in 1912, which tragically ended when the ship hit an iceberg and sank. This spreadsheet is based on data available from the Encyclopedia Titanica (Hind, 2023).
 
