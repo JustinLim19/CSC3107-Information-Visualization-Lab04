@@ -13,6 +13,9 @@ format: html
 
 # Importing Library and Data
 ```{r}
+#| label: required-packages
+#| message: false
+
 library(tidyverse)
 library(palmerpenguins)
 library(ggbeeswarm)
