@@ -213,6 +213,8 @@ p <- ggplot(data = titanic) +
   geom_mosaic(aes(x = product(survived, class), fill = survived)) +
   labs(
     title = "Titanic Travelers by Class and Survival",
+    x = "Class",
+    y = "Survived",
     caption = "Source: Encyclopedia Titanica (2023)"
   ) 
 
