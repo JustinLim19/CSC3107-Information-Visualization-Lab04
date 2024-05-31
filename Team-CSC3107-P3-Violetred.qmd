@@ -151,10 +151,11 @@ Create a bar chart showing the number of travelers by class.
 ```{r}
 #| fig.width: 3.5
 #| fig-height: 1.5
+#| fig.align: 'center'
 titanic <- read_csv("titanic.csv")
 
 # Create a bar plot for the number of travelers by class
-g <- ggplot(titanic, aes(x = class)) +
+ggplot(titanic, aes(x = class)) +
   geom_bar(fill = NA, color = "black") +
   coord_flip() +
   labs(
@@ -165,8 +166,7 @@ g <- ggplot(titanic, aes(x = class)) +
   ) +
   ylim(0, 1000) +
   guides(x = "none") + 
-  geom_text(stat = "count", aes(label = ..count..), hjust = -0.1, size = 3)
-g 
+  geom_text(stat = "count", aes(label = after_stat(count)), hjust = -0.1, size = 3)
 ```
 
 # Task 3.2: Dodged Bar Chart of Travelers by Class and Survival
