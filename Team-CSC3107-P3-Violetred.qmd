@@ -174,13 +174,17 @@ ggplot(titanic, aes(x = class)) +
 Visualize the survival rate by class using a dodged bar chart.
 
 ```{r}
+#| fig.width: 4
+#| fig-height: 2.5
+#| fig.align: 'center'
 ggplot(titanic, aes(y = class, fill = survived)) +
   geom_bar(position = "dodge") +
   geom_text(
     aes(label = ..count.., color = survived), 
     stat = "count", 
     position = position_dodge(width = 0.9), 
-    hjust = -0.5
+    hjust = -0.1,
+    size = 3
   ) +
   labs(
     title = "Titanic Travelers by Class and Survival",
@@ -188,13 +192,17 @@ ggplot(titanic, aes(y = class, fill = survived)) +
     x = NULL,
     caption = "Source: Encyclopedia Titanica (2023)"
   ) +
-  xlim(c(0, 700))
+  xlim(0, 800) +
+  guides(x = "none")
 ```
 
 # Task 3.3: Mosaic Plot
 Create a mosaic plot to display the relationship between class and survival.
 
 ```{r}
+#| fig.width: 5
+#| fig-height: 4
+#| fig.align: 'center'
 # Summarize data
 titanic_summary <- titanic %>%
   group_by(class, survived) %>%
