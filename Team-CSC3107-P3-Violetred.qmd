@@ -11,6 +11,17 @@ date: "2024-05-31"
 format: html
 ---
 
+# Importing Library and Data
+```{r}
+#| label: required-packages
+#| message: false
+
+library(tidyverse)
+library(palmerpenguins)
+library(ggbeeswarm)
+library(ggmosaic)
+```
+
 # 2. Visualizing the Distribution of Quantitative Data: Bill Lengths of Pygoscelis Penguins 
 Pygoscelis penguins, also known as brush-tailed penguins, are a genus found in the Antarctic and subantarctic regions. They are characterized by their black and white plumage and a unique swimming technique called porpoising, where they leap out of the water in a series of rapid jumps to breathe air. This genus includes three species: the Adélie penguin (Pygoscelis adeliae), the gentoo penguin (Pygoscelis papua), and the chinstrap penguin (Pygoscelis antarcticus). Researchers at Palmer Station in Antarctica have collected data on the bill length of these penguins (Gorman, Williams and Fraser, 2014). You will use these data, available from the palmerpenguins package, to explore the differences between the species using various plot types.
 
@@ -18,9 +29,6 @@ Pygoscelis penguins, also known as brush-tailed penguins, are a genus found in t
 Remove penguins with missing bill length measurements to avoid ggplot2 warning messages.
 
 ```{r}
-library(tidyverse)
-library(palmerpenguins)
-
 penguins_clean <- penguins %>% drop_na(bill_length_mm)
 ```
 
@@ -59,8 +67,6 @@ ggplot(penguins_clean, aes(x = bill_length_mm, y = species)) +
 Use the geom_beeswarm() function to create a bee-swarm plot.
 
 ```{r}
-library(ggbeeswarm)
-
 ggplot(penguins_clean, aes(x = bill_length_mm, y = species)) +
   geom_beeswarm() +
   labs(
@@ -176,8 +182,6 @@ ggplot(titanic, aes(x = class, fill = survived)) +
 Create a mosaic plot to display the relationship between class and survival.
 
 ```{r}
-library(ggmosaic)
-
 ggplot(data = titanic) +
   geom_mosaic(aes(weight = 1, x = product(class), fill = survived)) +
   labs(
