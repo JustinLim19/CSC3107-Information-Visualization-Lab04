@@ -195,12 +195,26 @@ ggplot(titanic, aes(y = class, fill = survived)) +
 Create a mosaic plot to display the relationship between class and survival.
 
 ```{r}
-ggplot(data = titanic) +
-  geom_mosaic(aes(weight = 1, x = product(class), fill = survived)) +
+# Summarize data
+titanic_summary <- titanic %>%
+  group_by(class, survived) %>%
+  summarise(count = n())
+
+# Create the initial mosaic plot
+p <- ggplot(data = titanic) +
+  geom_mosaic(aes(x = product(survived, class), fill = survived)) +
   labs(
-    title = "Class vs. Survival on the Titanic",
+    title = "Titanic Travelers by Class and Survival",
     caption = "Source: Encyclopedia Titanica (2023)"
-  )
+  ) 
+
+
+# Extract data from the plot to use for labels
+plot_data <- ggplot_build(p)$data[[1]]
+
+# Add the text labels to the plot
+p + geom_text(data = plot_data, aes(x = (xmin + xmax) / 2, y = (ymin + ymax) / 2, label = round(.wt)), size = 4, color = "black")
+
 ```
 
 # Task 3.4: Pros and Cons of Mosaic Plots
