@@ -142,6 +142,7 @@ The tables represents the p-values for the pairwise comparisons bewteen the 3 sp
 - Adelie vs Chinstrap: The p-value is extremely low, indicating a statistically siginificant difference in bill lenghts bewteen the 2 species.
 - Adelie vs Gentoo: The p-value is low, indicating a statistically siginificant difference in bill lenghts bewteen the 2 species.
 - Chinstrap vs Gentoo: The p-value is approximately 0.003, which is also below the typical alpha level of 0.05, suggesting significant difference in bill lenghts bewteen the 2 species.
+
 # 3  Visualizing the Distribution of Categorical Data: Travelers on the Titanic
 The spreadsheet at titanic.csv, available from Prof. Gastner’s website, contains information about the passengers and crew aboard the Titanic during its maiden voyage in 1912, which tragically ended when the ship hit an iceberg and sank. This spreadsheet is based on data available from the Encyclopedia Titanica (Hind, 2023).
 
@@ -173,14 +174,21 @@ ggplot(titanic, aes(x = class)) +
 Visualize the survival rate by class using a dodged bar chart.
 
 ```{r}
-ggplot(titanic, aes(x = class, fill = survived)) +
+ggplot(titanic, aes(y = class, fill = survived)) +
   geom_bar(position = "dodge") +
+  geom_text(
+    aes(label = ..count.., color = survived), 
+    stat = "count", 
+    position = position_dodge(width = 0.9), 
+    hjust = -0.5
+  ) +
   labs(
-    title = "Survival Rate by Class on the Titanic",
-    x = "Class",
-    y = "Number of Travelers",
+    title = "Titanic Travelers by Class and Survival",
+    y = NULL,
+    x = NULL,
     caption = "Source: Encyclopedia Titanica (2023)"
-  )
+  ) +
+  xlim(c(0, 700))
 ```
 
 # Task 3.3: Mosaic Plot
