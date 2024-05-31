@@ -149,8 +149,8 @@ The spreadsheet at titanic.csv, available from Prof. Gastner’s website, contai
 Create a bar chart showing the number of travelers by class.
 
 ```{r}
-#| fig.width: 4
-#| fig-height: 2
+#| fig.width: 3.5
+#| fig-height: 1.5
 titanic <- read_csv("titanic.csv")
 
 # Create a bar plot for the number of travelers by class
@@ -163,8 +163,10 @@ g <- ggplot(titanic, aes(x = class)) +
     y = NULL,
     caption = "Source: Encyclopedia Titanica (2023)"
   ) +
-  guides(x = "none")
-g + geom_text(stat = "count", aes(label = ..count..), hjust = 0, size = 3)
+  ylim(0, 1000) +
+  guides(x = "none") + 
+  geom_text(stat = "count", aes(label = ..count..), hjust = -0.1, size = 3)
+g 
 ```
 
 # Task 3.2: Dodged Bar Chart of Travelers by Class and Survival
